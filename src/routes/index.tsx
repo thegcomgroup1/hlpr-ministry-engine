@@ -43,6 +43,7 @@ function Index() {
         <TimesLocation />
         <WhatToExpect />
         <MissionStory />
+        <WelcomeVideo />
         <LifeOfChurch />
         <Ministries />
         <Events />
