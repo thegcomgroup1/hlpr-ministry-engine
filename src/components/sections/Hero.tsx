@@ -2,16 +2,48 @@ import { MapPin, Clock } from "lucide-react";
 import { PlanYourVisitButton } from "@/components/PlanYourVisitButton";
 import { siteConfig } from "@/config/site";
 
+/**
+ * Hero — media-aware.
+ *
+ * The image is ALWAYS rendered as the base layer: it paints instantly,
+ * is the mobile + slow-connection + reduced-motion fallback, and is what
+ * search engines see. When heroMedia.type === "video" AND a videoSrc is
+ * provided, a muted, looping, autoplaying clip is layered on top on
+ * desktop only. Free mockups just leave type as "image" and nothing
+ * about the video path runs.
+ */
 export function Hero() {
+  const { heroMedia } = siteConfig.brand;
+  const showVideo = heroMedia.type === "video" && Boolean(heroMedia.videoSrc);
+
   return (
     <section id="top" className="relative isolate overflow-hidden">
+      {/* Base layer: always present (instant paint, mobile, fallback, SEO) */}
       <img
-        src={siteConfig.brand.heroImageSrc}
+        src={heroMedia.imageSrc}
         alt={`The ${siteConfig.church.name} congregation gathering on a Sunday morning`}
         width={1920}
         height={1080}
         className="absolute inset-0 -z-10 h-full w-full object-cover"
       />
+
+      {/* Video layer: desktop only, sits over the image. The image shows
+          through on mobile and when the user prefers reduced motion
+          (see .hero-video rule in styles.css). */}
+      {showVideo && (
+        <video
+          className="hero-video absolute inset-0 -z-10 hidden h-full w-full object-cover md:block"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={heroMedia.imageSrc}
+        >
+          <source src={heroMedia.videoSrc} />
+        </video>
+      )}
+
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-black/55 via-black/45 to-black/65" />
 
       <div className="mx-auto flex min-h-[640px] max-w-6xl flex-col items-start justify-center px-4 py-24 sm:px-6 md:min-h-[720px] md:py-32">

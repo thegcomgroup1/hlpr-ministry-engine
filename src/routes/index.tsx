@@ -4,6 +4,7 @@ import { Hero } from "@/components/sections/Hero";
 import { TimesLocation } from "@/components/sections/TimesLocation";
 import { WhatToExpect } from "@/components/sections/WhatToExpect";
 import { MissionStory } from "@/components/sections/MissionStory";
+import { WelcomeVideo } from "@/components/sections/WelcomeVideo";
 import { LifeOfChurch } from "@/components/sections/LifeOfChurch";
 import { Ministries } from "@/components/sections/Ministries";
 import { Events } from "@/components/sections/Events";

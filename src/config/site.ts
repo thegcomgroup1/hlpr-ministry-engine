@@ -34,7 +34,17 @@ export const siteConfig = {
 
   brand: {
     logoText: "[CHURCH]",
-    heroImageSrc: heroImage,
+    /**
+     * Hero media. Free mockups: leave type as "image" (videoSrc ignored).
+     * Live sites / paid builds: set type to "video" and point videoSrc at a
+     * compressed, muted, loopable .mp4/.webm. imageSrc is ALWAYS used as the
+     * poster, the mobile fallback, and the reduced-motion fallback.
+     */
+    heroMedia: {
+      type: "image" as "image" | "video",
+      imageSrc: heroImage,
+      videoSrc: "",
+    },
     storyImageSrc: storyImage,
   },
 
@@ -128,6 +138,15 @@ export const siteConfig = {
   give: {
     line: "Every gift goes toward people — locally and around the world. Give online in about thirty seconds.",
     onlineUrl: "#",
+  },
+
+  welcomeVideo: {
+    enabled: false,
+    eyebrow: "Meet us first",
+    heading: "A quick hello before you visit.",
+    body: "We know visiting a new church can feel like a big step. So before you ever walk through the doors, here's a short hello from our team — who we are, and what Sunday looks like.",
+    posterSrc: storyImage,
+    embedUrl: "",
   },
 
   contact: {
