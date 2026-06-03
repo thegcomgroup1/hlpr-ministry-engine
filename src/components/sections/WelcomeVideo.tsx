@@ -12,13 +12,43 @@ import { siteConfig } from "@/config/site";
  * fast for everyone who doesn't. Provide a YouTube/Vimeo *embed* URL
  * (e.g. https://www.youtube.com/embed/VIDEO_ID).
  */
+/**
+ * Accepts any of these and returns a normalized embed URL:
+ *  - https://www.youtube.com/watch?v=ID
+ *  - https://youtu.be/ID
+ *  - https://www.youtube.com/embed/ID
+ *  - https://vimeo.com/ID
+ *  - https://player.vimeo.com/video/ID
+ * Returns null if it can't recognize the provider.
+ */
+function toEmbedUrl(raw: string): string | null {
+  if (!raw) return null;
+  const url = raw.trim();
+
+  // YouTube
+  const yt =
+    url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+  if (yt) return `https://www.youtube.com/embed/${yt[1]}`;
+
+  // Vimeo
+  const vimeo = url.match(/(?:vimeo\.com\/(?:video\/)?|player\.vimeo\.com\/video\/)(\d+)/);
+  if (vimeo) return `https://player.vimeo.com/video/${vimeo[1]}`;
+
+  // Already an embed-style URL from another provider — pass through.
+  if (/\/embed\//.test(url) || /player\./.test(url)) return url;
+
+  return null;
+}
+
 export function WelcomeVideo() {
   const v = siteConfig.welcomeVideo;
   const [playing, setPlaying] = useState(false);
 
   if (!v.enabled || !v.embedUrl) return null;
 
-  const embedUrl: string = v.embedUrl;
+  const embedUrl = toEmbedUrl(v.embedUrl);
+  if (!embedUrl) return null;
+
   const src = playing
     ? `${embedUrl}${embedUrl.includes("?") ? "&" : "?"}autoplay=1`
     : "";
