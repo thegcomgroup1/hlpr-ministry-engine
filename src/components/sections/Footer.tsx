@@ -29,8 +29,19 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="mt-10 border-t border-border pt-6 text-xs text-muted-foreground">
-          © {year} {siteConfig.church.name}. All rights reserved.
+        <div className="mt-10 flex flex-col justify-between gap-2 border-t border-border pt-6 text-xs text-muted-foreground md:flex-row md:items-center">
+          <span>© {year} {siteConfig.church.name}. All rights reserved.</span>
+          <span>
+            Powered by{" "}
+            <a
+              href="https://ministries.hlpr.io"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
+              HLPR Ministries
+            </a>
+          </span>
         </div>
       </div>
     </footer>
