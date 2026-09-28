@@ -133,6 +133,11 @@ export const siteConfig = {
       "A short, practical look at what it means to follow Jesus in the middle of an ordinary week.",
     embedUrl: "", // YouTube/FB/podcast embed
     watchUrl: "#",
+    /**
+     * YouTube channel ID (starts with "UC..."). When set, the newest upload
+     * is pulled in automatically and plays right on the site.
+     */
+    youtubeChannelId: "",
   },
 
   give: {
