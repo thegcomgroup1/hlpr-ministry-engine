@@ -12,6 +12,8 @@ import { Sermons } from "@/components/sections/Sermons";
 import { Give } from "@/components/sections/Give";
 import { PlanYourVisit } from "@/components/sections/PlanYourVisit";
 import { Footer } from "@/components/sections/Footer";
+import { siteConfig } from "@/config/site";
+import { getLatestYouTubeVideo } from "@/lib/youtube.functions";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -31,10 +33,14 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
     ],
   }),
+  loader: () =>
+    getLatestYouTubeVideo({ data: { channelId: siteConfig.sermon.youtubeChannelId } }),
+  staleTime: 5 * 60 * 1000,
   component: Index,
 });
 
 function Index() {
+  const latestVideo = Route.useLoaderData();
   return (
     <div className="min-h-screen bg-background text-foreground">
       <StickyHeader />
@@ -47,7 +53,7 @@ function Index() {
         <LifeOfChurch />
         <Ministries />
         <Events />
-        <Sermons />
+        <Sermons latestVideo={latestVideo} />
         <Give />
         <PlanYourVisit />
       </main>
